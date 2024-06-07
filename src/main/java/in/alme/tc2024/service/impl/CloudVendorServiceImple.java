@@ -1,6 +1,7 @@
 package in.alme.tc2024.service.impl;
 
 import in.alme.tc2024.Model.CloudVendor;
+import in.alme.tc2024.exception.CloudVendorNotFoundException;
 import in.alme.tc2024.repository.CloudVendorRepository;
 import in.alme.tc2024.service.CloudVendorService;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,9 @@ public class CloudVendorServiceImple implements CloudVendorService {
 
     @Override
     public CloudVendor getCloudVendor(String cloudVendorId) {
+        if(cloudVendorRepository.findById(cloudVendorId).isEmpty()){
+           throw new CloudVendorNotFoundException("requested cloud vendor doesnot exist ");
+        }
         return  cloudVendorRepository.findById(cloudVendorId).get();
 
     }
