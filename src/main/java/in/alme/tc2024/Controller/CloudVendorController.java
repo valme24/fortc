@@ -1,6 +1,7 @@
 package in.alme.tc2024.Controller;
 
 import in.alme.tc2024.Model.CloudVendor;
+import in.alme.tc2024.response.ResponseHandler;
 import in.alme.tc2024.service.CloudVendorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +21,10 @@ public class CloudVendorController {
     // Initialize cloudVendor here or inject via constructor
 
     @GetMapping("/{vendorId}")
-    public CloudVendor getCloudVendorDetails(@PathVariable String vendorId) {
+    public ResponseEntity<Object> getCloudVendorDetails(@PathVariable String vendorId) {
         // Check if vendorId exists, if not return 404
-        return  cloudVendorService.getCloudVendor(vendorId);
+        return  ResponseHandler.responseBuilder("requested information is here",HttpStatus.OK,cloudVendorService.getCloudVendor(vendorId));
+
 
     }
 
