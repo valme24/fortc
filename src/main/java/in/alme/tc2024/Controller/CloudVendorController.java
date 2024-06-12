@@ -3,6 +3,7 @@ package in.alme.tc2024.Controller;
 import in.alme.tc2024.Model.CloudVendor;
 import in.alme.tc2024.response.ResponseHandler;
 import in.alme.tc2024.service.CloudVendorService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,8 @@ public class CloudVendorController {
     // Initialize cloudVendor here or inject via constructor
 
     @GetMapping("/{vendorId}")
+    @ApiOperation(value ="Cloud vendor id", notes="Provide cloud vendor details",
+            response = ResponseEntity.class)
     public ResponseEntity<Object> getCloudVendorDetails(@PathVariable String vendorId) {
         // Check if vendorId exists, if not return 404
         return  ResponseHandler.responseBuilder("requested information is here",HttpStatus.OK,cloudVendorService.getCloudVendor(vendorId));
@@ -29,7 +32,7 @@ public class CloudVendorController {
     }
 
 // for all cloud vendors details
-    @GetMapping
+@GetMapping("/")
     public List<CloudVendor> getAllCloudVendorsDetails() {
         // Check if vendorId exists, if not return 404
         return  cloudVendorService.getCloudVendors();
@@ -37,19 +40,19 @@ public class CloudVendorController {
     }
 
 
-    @PutMapping
+    @PutMapping("/")
     public ResponseEntity<String> updateCloudVendorDetails(@RequestBody CloudVendor cloudVendor) {
         cloudVendorService.updateCloudVendor(cloudVendor);
         return ResponseEntity.ok("Cloud vendor updated successfully");
     }
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<String> createCloudVendorDetails(@RequestBody CloudVendor cloudVendor) {
         cloudVendorService.createCloudVendor(cloudVendor);
         return ResponseEntity.status(HttpStatus.CREATED).body("Cloud vendor created successfully");
     }
 
-    @DeleteMapping("{vendorId}")
+    @DeleteMapping("/{vendorId}")
     public ResponseEntity<String> deleteCloudVendorDetails(@PathVariable String vendorId) {
 
             cloudVendorService.deleteCloudVendor(vendorId);
